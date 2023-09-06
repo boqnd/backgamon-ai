@@ -7,31 +7,56 @@ import {
   PointNumber,
   MoveTwo,
   MoveOne,
+  TakenPieces,
 } from "./types";
 
 export const NUMBER_OF_POINTS = 24;
 
 let w = new WeightTable();
 
-function getMovesWithOne(currTable: Table, currDie: Die): MoveOne[] {
+function getMovesWithOne(
+  currTable: Table,
+  currDie: Die,
+  takenPieces: TakenPieces
+): MoveOne[] {
   let moves: MoveOne[] = [];
 
-  for (let i = 0; i < NUMBER_OF_POINTS; i++) {
-    if (currTable[i] <= 0) continue; // No friendly pieces on this point
-    if (i + currDie >= NUMBER_OF_POINTS) continue; // TODO: logic for end game
-    if (currTable[i + currDie] < -1) continue; // Landing point has many enemy piences
+  if (takenPieces === 0) {
+    for (let i = 0; i < NUMBER_OF_POINTS; i++) {
+      if (currTable[i] <= 0) continue; // No friendly pieces on this point
+      if (i + currDie >= NUMBER_OF_POINTS) continue; // TODO: logic for end game
+      if (currTable[i + currDie] < -1) continue; // Landing point has many enemy piences
+
+      let temp: Table = [...currTable];
+      temp[i]--;
+      if (currTable[i + currDie] === -1) temp[i + currDie]++;
+      temp[i + currDie]++;
+      moves.push({
+        tableBefore: currTable,
+        tableAfter: temp,
+        // @ts-ignore
+        moveFrom: i,
+        die: currDie,
+        weight: w.getWeight(currTable[i], currTable[i + currDie]),
+      });
+    }
+  } else {
+    if (currTable[currDie-1] < -1) return [];
 
     let temp: Table = [...currTable];
-    temp[i]--;
-    if (currTable[i + currDie] === -1) temp[i + currDie]++;
-    temp[i + currDie]++;
+
+    if (currTable[currDie-1] === -1) temp[currDie-1]++;
+    temp[currDie-1]++;
+
     moves.push({
       tableBefore: currTable,
       tableAfter: temp,
       // @ts-ignore
-      moveFrom: i,
+      moveFrom: -1,
       die: currDie,
-      weight: w.getWeight(currTable[i], currTable[i + currDie]),
+      weight: w.getWeight(1, currTable[currDie-1]),
+      // @ts-ignore
+      takenPieces: takenPieces-1,
     });
   }
 
@@ -41,18 +66,31 @@ function getMovesWithOne(currTable: Table, currDie: Die): MoveOne[] {
 export class Game {
   private table: Table;
   private dise: Dise;
+  private takenPieces: TakenPieces;
+  private enemyTakenPieces: TakenPieces;
 
-  constructor(table: Table, dise: Dise) {
+  constructor(
+    table: Table,
+    dise: Dise,
+    takenPieces: TakenPieces,
+    enemyTakenPieces: TakenPieces
+  ) {
     this.table = table;
     this.dise = dise;
+    this.takenPieces = takenPieces;
+    this.enemyTakenPieces = enemyTakenPieces;
   }
 
   private getMoves(die1: Die, die2: Die): MoveTwo[] {
-    let firstMoves: MoveOne[] = getMovesWithOne(this.table, die1);
+    let firstMoves: MoveOne[] = getMovesWithOne(
+      this.table,
+      die1,
+      this.takenPieces
+    );
     let secondMoves: MoveTwo[] = [];
 
     for (let firstMove of firstMoves) {
-      for (let secondMove of getMovesWithOne(firstMove.tableAfter, die2)) {
+      for (let secondMove of getMovesWithOne(firstMove.tableAfter, die2, firstMove.takenPieces)) {
         secondMoves.push({
           firstMove,
           secondMove,
