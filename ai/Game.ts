@@ -17,12 +17,13 @@ function getMovesWithOne(currTable: Table, currDie: Die): MoveOne[] {
   let moves: MoveOne[] = [];
 
   for (let i = 0; i < NUMBER_OF_POINTS; i++) {
-    if (currTable[i] <= 0) continue;
+    if (currTable[i] <= 0) continue; // No friendly pieces on this point
     if (i + currDie >= NUMBER_OF_POINTS) continue; // TODO: logic for end game
-    if (currTable[i + currDie] < 0) continue;
+    if (currTable[i + currDie] < -1) continue; // Landing point has many enemy piences
 
     let temp: Table = [...currTable];
     temp[i]--;
+    if (currTable[i + currDie] === -1) temp[i + currDie]++;
     temp[i + currDie]++;
     moves.push({
       tableBefore: currTable,

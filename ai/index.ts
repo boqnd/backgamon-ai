@@ -1,10 +1,10 @@
 import { Table, Dise, Die, Point, PointNumber } from "./types";
 import { Game } from "./Game";
 
-const init_table: Table = [
-  2, 0, 0, 0, 0, -5, 0, -3, 0, 0, 0, 5, -5, 0, 0, 0, 3, 0, 5, 0, 0, 0, 0, -2,
-];
-const init_dise: Dise = [2, 1];
+// const init_table: Table = [
+//   2, 0, 0, 0, 0, -5, 0, -3, 0, 0, 0, 5, -5, 0, 0, 0, 3, 0, 5, 0, 0, 0, 0, -2,
+// ];
+// const init_dise: Dise = [2, 1];
 
 //тук трябва да мести по скоро първите
 // const init_table: Table = [
@@ -13,10 +13,10 @@ const init_dise: Dise = [2, 1];
 // const init_dise: Dise = [5, 1];
 
 //не съм направил взимане още
-// const init_table: Table = [
-//   0, 2, 0, 0, 0, -4, 0, -4, 0, 0, 0, 4, -4, 0, 0, -1, 3, 0, 3, 3, 0, -2, 0, 0,
-// ];
-// const init_dise: Dise = [5, 1];
+const init_table: Table = [
+  0, 2, 0, 0, 0, -4, 0, -4, 0, 0, 1, 3, -4, 0, 0, -1, 3, 0, 3, 3, 0, -2, 0, 0,
+];
+const init_dise: Dise = [5, 4];
 
 // const init_table: Table = [
 //   0, -1, 2, 0, -3, -2, -1, -3, 1, 0, 0, 4, -3, 0, 0, 0, 4, 0, 4, 0, 0, 0, -2, 0,

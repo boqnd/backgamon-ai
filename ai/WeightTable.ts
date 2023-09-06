@@ -5,10 +5,15 @@ export class WeightTable {
 
   constructor() {
     this.weights = {
+      one_enemy: 140, // ?
+      many_enemy: 130, // ?
+
       one_one: 120,
       many_one: 110,
       one_two: 100,
       one_many: 90,
+
+      two_enemy: 85, // ?
 
       many_two: 80,
       many_many: 70,
@@ -25,18 +30,21 @@ export class WeightTable {
 
   public getWeight(pointFrom: Point, pointTo: Point): number {
     if (pointFrom === 1) {
+      if (pointTo === -1) return this.weights.one_enemy;
       if (pointTo === 0) return this.weights.one_zero;
       if (pointTo === 1) return this.weights.one_one;
       if (pointTo === 2) return this.weights.one_two;
       if (pointTo > 2) return this.weights.one_many;
       return 0;
     } else if (pointFrom === 2) {
+      if (pointTo === -1) return this.weights.two_enemy;
       if (pointTo === 0) return this.weights.two_zero;
       if (pointTo === 1) return this.weights.two_one;
       if (pointTo === 2) return this.weights.two_two;
       if (pointTo > 2) return this.weights.two_many;
       return 0;
     } else if (pointFrom > 2) {
+      if (pointTo === -1) return this.weights.many_enemy;
       if (pointTo === 0) return this.weights.many_zero;
       if (pointTo === 1) return this.weights.many_one;
       if (pointTo === 2) return this.weights.many_two;
