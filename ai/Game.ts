@@ -24,7 +24,24 @@ function getMovesWithOne(
   if (takenPieces === 0) {
     for (let i = 0; i < NUMBER_OF_POINTS; i++) {
       if (currTable[i] <= 0) continue; // No friendly pieces on this point
-      if (i + currDie >= NUMBER_OF_POINTS) continue; // TODO: logic for end game
+
+      if (i + currDie >= NUMBER_OF_POINTS) {
+        if (!isEndGame(takenPieces, currTable)) continue;
+
+        let temp: Table = [...currTable];
+        temp[i]--;
+        moves.push({
+          tableBefore: currTable,
+          tableAfter: temp,
+          // @ts-ignore
+          moveFrom: i,
+          die: currDie,
+          weight: w.getWeight(currTable[i], currTable[i + currDie]),
+          takenPieces: 0,
+        });
+        continue;
+      }
+
       if (currTable[i + currDie] < -1) continue; // Landing point has many enemy piences
 
       let temp: Table = [...currTable];
@@ -38,6 +55,7 @@ function getMovesWithOne(
         moveFrom: i,
         die: currDie,
         weight: w.getWeight(currTable[i], currTable[i + currDie]),
+        takenPieces: 0,
       });
     }
   } else {
@@ -61,6 +79,16 @@ function getMovesWithOne(
   }
 
   return moves;
+}
+
+function isEndGame(takenPieces: TakenPieces, table: Table): boolean {
+  if (takenPieces) return false;
+
+  for (let i = 0; i < NUMBER_OF_POINTS - 6; i++) {
+    if (table[i] > 0) return false;
+  }
+
+  return true;
 }
 
 export class Game {

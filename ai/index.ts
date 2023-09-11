@@ -18,11 +18,19 @@ import { Game } from "./Game";
 // const enemyTakenPieces: TakenPieces = 0;
 
 //вкарване
+// const init_table: Table = [
+//   0, -1, 2, 0, -3, -2, -1, -3, 1, 0, 0, 4, -3, 0, 0, 0, 3, 0, 3, 0, 0, 0, -2, 0,
+// ];
+// const init_dise: Dise = [2,1];
+// const takenPieces: TakenPieces = 2;
+// const enemyTakenPieces: TakenPieces = 0;
+
+//изкарване
 const init_table: Table = [
-  0, -1, 2, 0, -3, -2, -1, -3, 1, 0, 0, 4, -3, 0, 0, 0, 3, 0, 3, 0, 0, 0, -2, 0,
+  0, -5,-5, -5, -5, -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 2, 5, 1,
 ];
 const init_dise: Dise = [2,1];
-const takenPieces: TakenPieces = 2;
+const takenPieces: TakenPieces = 0;
 const enemyTakenPieces: TakenPieces = 0;
 
 //тук трябва да мести по скоро първите

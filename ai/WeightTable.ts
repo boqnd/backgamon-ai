@@ -5,6 +5,8 @@ export class WeightTable {
 
   constructor() {
     this.weights = {
+      out: 150, // ?
+
       one_enemy: 140, // ?
       many_enemy: 130, // ?
 
@@ -29,6 +31,8 @@ export class WeightTable {
   }
 
   public getWeight(pointFrom: Point, pointTo: Point): number {
+    if (pointTo === undefined) return this.weights.out;
+
     if (pointFrom === 1) {
       if (pointTo === -1) return this.weights.one_enemy;
       if (pointTo === 0) return this.weights.one_zero;
