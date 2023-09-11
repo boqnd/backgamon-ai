@@ -26,10 +26,18 @@ import { Game } from "./Game";
 // const enemyTakenPieces: TakenPieces = 0;
 
 //изкарване
+// const init_table: Table = [
+//   0, -5,-5, -5, -5, -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 2, 5, 1,
+// ];
+// const init_dise: Dise = [2,1];
+// const takenPieces: TakenPieces = 0;
+// const enemyTakenPieces: TakenPieces = 0;
+
+//чифтове
 const init_table: Table = [
-  0, -5,-5, -5, -5, -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 2, 5, 1,
+  2, 0, 0, 0, 0, -5, 0, -3, 0, 0, 0, 5, -5, 0, 0, 0, 3, 0, 5, 0, 0, 0, 0, -2,
 ];
-const init_dise: Dise = [2,1];
+const init_dise: Dise = [4,4];
 const takenPieces: TakenPieces = 0;
 const enemyTakenPieces: TakenPieces = 0;
 
@@ -49,8 +57,8 @@ let game = new Game(init_table, init_dise, takenPieces, enemyTakenPieces);
 
 let m = game.getAllMoves();
 m = m.sort((x, y) => {
-  if (x.weight > y.weight) return 1;
-  if (x.weight < y.weight) return -1;
+  if (x.weight > y.weight) return -1;
+  if (x.weight < y.weight) return 1;
   return 0;
 });
-console.log(m);
+console.log(m[0]);

@@ -120,3 +120,12 @@ export type MoveTwo = {
   secondMove: MoveOne;
   weight: number;
 };
+
+export type MoveFour = {
+  firstMove: MoveOne;
+  secondMove: MoveOne;
+  thirdMove: MoveOne;
+  fourthMove: MoveOne;
+
+  weight: number;
+};

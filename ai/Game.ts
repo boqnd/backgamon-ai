@@ -7,6 +7,7 @@ import {
   PointNumber,
   MoveTwo,
   MoveOne,
+  MoveFour,
   TakenPieces,
 } from "./types";
 
@@ -130,7 +131,36 @@ export class Game {
     return secondMoves;
   }
 
-  public getAllMoves(): MoveTwo[] {
+  private getMovesPair(die: Die): MoveFour[] {
+    let firstMoves: MoveOne[] = getMovesWithOne(
+      this.table,
+      die,
+      this.takenPieces
+    );
+    let moves: MoveFour[] = [];
+
+    for (let firstMove of firstMoves) {
+      for (let secondMove of getMovesWithOne(firstMove.tableAfter, die, firstMove.takenPieces)) {
+        for (let thirdMove of getMovesWithOne(secondMove.tableAfter, die, secondMove.takenPieces)) {
+          for (let fourthMove of getMovesWithOne(thirdMove.tableAfter, die, thirdMove.takenPieces)) {
+            moves.push({
+              firstMove,
+              secondMove,
+              thirdMove,
+              fourthMove,
+              weight: firstMove.weight + secondMove.weight + thirdMove.weight + fourthMove.weight,
+            });
+          }
+        }
+      }
+    }
+
+    return moves;
+  }
+
+  public getAllMoves(): MoveTwo[] | MoveFour[] {
+    if (this.dise[0] == this.dise[1]) return this.getMovesPair(this.dise[0]);
+
     let moves: MoveTwo[] = [
       ...this.getMoves(this.dise[0], this.dise[1]),
       ...this.getMoves(this.dise[1], this.dise[0]),
